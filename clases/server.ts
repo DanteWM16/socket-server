@@ -42,6 +42,7 @@ export default class Server {
             
             // Obterner usuarios activos
             socket.obtenerUsuarios( cliente, this.io);
+            
             // Mensajes
             socket.mensaje( cliente, this.io );
 

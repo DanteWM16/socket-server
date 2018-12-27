@@ -1,21 +1,38 @@
 import Server from './clases/server';
 import { SERVER_PORT } from './global/enviroment';
-import router from './routes/router';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import mongoose from 'mongoose';
+
+// Importar rutas
+import router from './routes/router';
+import usuarioRoutes from './routes/usuario';
+import loginRoutes from './routes/login';
+import uploadRoutes from './routes/upload';
+
 
 const server = Server.instance;
 
-//BodyParser
+// BodyParser
 server.app.use( bodyParser.urlencoded({extended:true}) );
 server.app.use( bodyParser.json());
 
-//CORS
+// CORS
 server.app.use( cors({ origin: true, credentials: true }) );
 
-//Rutas de servicios
+// Rutas de servicios
+server.app.use('/upload', uploadRoutes);
+server.app.use('/login', loginRoutes);
+server.app.use('/usuario', usuarioRoutes);
 server.app.use('/', router);
 
+// Conexión a base de datos mongoDB
+mongoose.connect('mongodb://localhost/astrum', { useCreateIndex: true, useNewUrlParser: true}, ( err ) => {
+
+    if ( err ) throw err;
+
+    console.log('Conectado a la base de datos');
+});
 
 
 server.start(() => {

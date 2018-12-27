@@ -74,4 +74,12 @@ router.get('/usuarios/detalle', (req: Request, res: Response) => {
 });
 
 
+router.get('/prueba', (req: Request, res: Response) => {
+    const headers = req.headers.authorization;
+
+    res.json({
+        headers: headers
+    });
+});
+
 export default router;
